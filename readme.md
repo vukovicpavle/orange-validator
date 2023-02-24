@@ -1,73 +1,39 @@
-# 🍊 Template
+# 🍊 Validator
 
-This is a template for a new project.
-
-## How to use
-
-### Method 1
-
-1. Click on `Use this template` button
-
-### Method 2
-
-1. Clone this repository
-
-```bash
-git clone https://github.com/vukovicpavle/orange-template.git <project-name>
-```
-
-2. Install dependencies
-
-```bash
-npm install
-```
-
-3. Change name and description in `package.json`
-
-4. Update `readme.md`
-
-5. Change git remote
-
-```bash
-git remote set-url origin <new-repository-url>
-```
-
-6. Push to new repository
-
-```bash
-git push -u origin main
-```
-
-7. When ready, publish to npm
-
-```bash
-npm publish --access public
-```
+Validator middleware for Express.js
 
 ## Installation
 
 ```bash
-npm install @vukovicpavle/orange-template
+npm install @vukovicpavle/orange-validator
 ```
 
 ## Usage
 
 ```javascript
-// Example
+import { Router } from "express";
+import { validatorMiddleware } from "@vukovicpavle/orange-validator";
+
+const router = Router();
+
+const schema = joi.object({
+  name: joi.string().required(),
+});
+
+router.post("/test", validatorMiddleware(schema), (req, res) => {
+  res.send("OK");
+});
+
+export default router;
 ```
 
 ## API
 
-### `functionName()`
+### `validatorMiddleware(schema: Joi.Schema, options?: { allowUnknown?: boolean; })`
 
 #### Parameters
 
-| Name     | Type     | Description | Required | Default |
-| -------- | -------- | ----------- | -------- | ------- |
-| `param1` | `string` | Description | `false`  | `null`  |
-
-#### Returns
-
-| Type     | Description |
-| -------- | ----------- |
-| `string` | Description |
+| Name      | Type         | Description | Required | Default                   |
+| --------- | ------------ | ----------- | -------- | ------------------------- |
+| `schema`  | `Joi.Schema` | Joi schema  | `true`   | -                         |
+| `options` | `object`     | Options     | `false`  | `{ allowUnknown: false }` |
